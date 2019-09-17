@@ -6,15 +6,18 @@ import {
   View,
 } from 'react-360';
 
+import Room from './Room';
+// AppRegistry.registerComponent('Room', () => Room);
+
 export default class react_360 extends React.Component {
   render() {
     return (
       <View style={styles.panel}>
-        <View style={styles.greetingBox}>
-          <Text style={styles.greeting}>
-            Welcome to React 360
-          </Text>
-        </View>
+      {/* //   <View style={styles.greetingBox}>
+      //     <Text style={styles.greeting}>
+      //       Welcome to Another Vision
+      //     </Text>
+      //   </View> */}
       </View>
     );
   }
