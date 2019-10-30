@@ -1,5 +1,5 @@
 import { AxesHelper, Color, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three';
-import { Brick } from './brick';
+import { Room } from './room';
 import { Screen } from './screen';
 import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
 
@@ -15,6 +15,7 @@ export class App {
   // private bricks: Brick[];
 
   private screen: Screen;
+  private room: Room;
 
   constructor() {
     // IMPORTANT - vr viewer starts off looking in (0, 0, -1) direction
@@ -22,6 +23,10 @@ export class App {
     this.screen = new Screen(10, 5, new Color('white'));
     this.scene.add(this.screen);
     this.screen.position.set(0,0,-10);
+
+    this.room = new Room(20, new Color('red'));
+    this.scene.add(this.room);
+    this.room.position.set(0,0,-10);
 
 
     // this.brick = new Brick(5, new Color('rgb(255,0,0)'));
