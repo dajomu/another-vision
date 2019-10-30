@@ -18,12 +18,12 @@ export class App {
 
   constructor() {
     // IMPORTANT - vr viewer starts off looking in (0, 0, -1) direction
-    //test change
-    this.screen = new Screen(10, new Color('blue'));
+
+    this.screen = new Screen(10, 5, new Color('white'));
     this.scene.add(this.screen);
     this.screen.position.set(0,0,-10);
-    
-    
+
+
     // this.brick = new Brick(5, new Color('rgb(255,0,0)'));
     // this.scene.add(this.brick);
     // this.brick.position.set(0,0,-10);
