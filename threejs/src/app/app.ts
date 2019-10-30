@@ -18,7 +18,7 @@ export class App {
 
   constructor() {
     // IMPORTANT - vr viewer starts off looking in (0, 0, -1) direction
-    
+    //test change
     this.screen = new Screen(10, new Color('blue'));
     this.scene.add(this.screen);
     this.screen.position.set(0,0,-10);
