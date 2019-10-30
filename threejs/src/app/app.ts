@@ -1,5 +1,6 @@
 import { AxesHelper, Color, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three';
 import { Brick } from './brick';
+import { Screen } from './screen';
 import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
 
 export class App {
@@ -10,15 +11,23 @@ export class App {
     canvas: document.getElementById('main-canvas') as HTMLCanvasElement,
   });
 
-  private brick: Brick;
-  private bricks: Brick[];
+  // private brick: Brick;
+  // private bricks: Brick[];
+
+  private screen: Screen;
 
   constructor() {
     // IMPORTANT - vr viewer starts off looking in (0, 0, -1) direction
-    this.brick = new Brick(5, new Color('rgb(255,0,0)'));
-    this.scene.add(this.brick);
-    this.brick.position.set(0,0,-10);
-    this.bricks = [];
+    
+    this.screen = new Screen(10, new Color('blue'));
+    this.scene.add(this.screen);
+    this.screen.position.set(0,0,-10);
+    
+    
+    // this.brick = new Brick(5, new Color('rgb(255,0,0)'));
+    // this.scene.add(this.brick);
+    // this.brick.position.set(0,0,-10);
+    // this.bricks = [];
 
     // for(let x = 0; x < 10; x++) {
     //   for(let y = 0; y < 10; y++) {
@@ -69,9 +78,10 @@ export class App {
     console.log('render?', this.camera.position.x, this.camera.position.y, this.camera.position.z, this.camera.rotation.x, this.camera.rotation.y, this.camera.rotation.z);
     this.renderer.render(this.scene, this.camera);
     this.adjustCanvasSize();
+    // this.screen.rotateY(0.03);
     // this.camera.position.set(0,0,0);
     // this.camera.lookAt(new Vector3(1, 1, 1));
-    this.brick.rotateY(0.03);
-    this.bricks.forEach(brickk => {brickk.rotateY(0.03)})
+    // this.brick.rotateY(0.03);
+    // this.bricks.forEach(brickk => {brickk.rotateY(0.03)})
   }
 }
