@@ -1,7 +1,6 @@
 import { AxesHelper, Color, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three';
 import { Room } from './room';
 import { Screen } from './screen';
-import { Light } from './light';
 import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
 
 export class App {
