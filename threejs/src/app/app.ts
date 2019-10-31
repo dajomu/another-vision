@@ -14,7 +14,6 @@ export class App {
 
   private screen: Screen;
   private room: Room;
-  private light: Light;
 
   constructor() {
     // IMPORTANT - vr viewer starts off looking in (0, 0, -1) direction
@@ -28,9 +27,6 @@ export class App {
     this.room = new Room(20, new Color('red'));
     this.scene.add(this.room);
     this.room.position.set(0,0,0);
-
-    // Light
-    //this.light = new Light(0xffffff);
 
     // To see XYZ axes in VR
     var axesHelper = new AxesHelper( 20 );
