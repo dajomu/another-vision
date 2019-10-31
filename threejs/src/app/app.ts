@@ -2,7 +2,7 @@ import { AxesHelper, Color, PerspectiveCamera, Scene, Vector3, WebGLRenderer } f
 import { Room } from './room';
 import { Screen } from './screen';
 import { Light } from './light';
-import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
+import { WEBVR } from 'three/examples/jsm/vr/WebVR';
 
 export class App {
   private readonly scene = new Scene();
@@ -30,7 +30,15 @@ export class App {
     this.room.position.set(0,0,0);
 
     // Light
-    //this.light = new Light(0xffffff);
+    this.light = new Light(new Color('blue'));
+    this.scene.add(this.light);
+    this.scene.add(this.light.target);
+    this.light.penumbra = 0.1;
+    this.light.angle = 90;
+    this.light.distance = 0;
+    this.light.intensity = 2;
+    this.light.position.set(0,5,0);
+    this.light.target.position.set(0,0,-1);
 
     // To see XYZ axes in VR
     var axesHelper = new AxesHelper( 20 );
