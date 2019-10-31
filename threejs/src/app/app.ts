@@ -1,7 +1,7 @@
 import { AxesHelper, Color, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three';
 import { Room } from './room';
 import { Screen } from './screen';
-import { Light } from './light';
+import { Haze } from './haze';
 import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
 
 export class App {
@@ -14,6 +14,7 @@ export class App {
 
   private screen: Screen;
   private room: Room;
+  private haze: Haze;
 
   constructor() {
     // IMPORTANT - vr viewer starts off looking in (0, 0, -1) direction
@@ -27,6 +28,10 @@ export class App {
     this.room = new Room(20, new Color('red'));
     this.scene.add(this.room);
     this.room.position.set(0,0,0);
+
+    // Fog
+    this.haze = new Haze(new Color('blue'), 0.5);
+    this.scene.fog = this.haze;
 
     // To see XYZ axes in VR
     var axesHelper = new AxesHelper( 20 );
