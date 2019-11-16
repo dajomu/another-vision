@@ -29,10 +29,10 @@ export class App {
     this.room.position.set(0,0,0);
 
     // Light
-    const color = 0xFFFFFF;
-    const intensity = 1;
+    const color = 0x35fc03;
+    const intensity = 0.75;
     const light = new THREE.SpotLight(color, intensity);
-    light.position.set(0, 0, 0);
+    light.position.set(0, 0, 100);
     light.target.position.set(0, 0, -1);
 
     this.scene.add(light);
