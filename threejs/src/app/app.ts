@@ -2,6 +2,7 @@ import { AxesHelper, Color, PerspectiveCamera, Scene, Vector3, WebGLRenderer } f
 import { Room } from './room';
 import { Screen } from './screen';
 import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
+import THREE = require('three');
 
 export class App {
   private readonly scene = new Scene();
@@ -26,6 +27,16 @@ export class App {
     this.room = new Room(20, new Color('red'));
     this.scene.add(this.room);
     this.room.position.set(0,0,0);
+
+    // Light
+    const color = 0xFFFFFF;
+    const intensity = 1;
+    const light = new THREE.SpotLight(color, intensity);
+    light.position.set(0, 0, 0);
+    light.target.position.set(0, 0, -1);
+
+    this.scene.add(light);
+    this.scene.add(light.target);
 
     // To see XYZ axes in VR
     var axesHelper = new AxesHelper( 20 );
