@@ -1,3 +1,4 @@
+const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 
 module.exports = {
@@ -23,5 +24,10 @@ module.exports = {
   },
   watchOptions: {
     ignored: /node_modules/
-  }
+  },
+  plugins: [
+    new CopyPlugin([
+      { from: ('src/assets'), to: ('assets') },
+    ])
+  ]
 }

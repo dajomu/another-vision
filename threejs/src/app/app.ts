@@ -14,8 +14,18 @@ export class App {
     canvas: document.getElementById('main-canvas') as HTMLCanvasElement,
   });
 
+<<<<<<< Updated upstream
   // private screen: Screen;
   // private room: Room;
+=======
+<<<<<<< HEAD
+  private screen: Screen;
+  //private room: Room;
+=======
+  // private screen: Screen;
+  // private room: Room;
+>>>>>>> 88e890ca8e4e9888a5b7405b9601d232e0ab5b01
+>>>>>>> Stashed changes
 
   constructor() {
     // IMPORTANT - vr viewer starts off looking in (0, 0, -1) direction
