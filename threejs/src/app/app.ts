@@ -14,18 +14,8 @@ export class App {
     canvas: document.getElementById('main-canvas') as HTMLCanvasElement,
   });
 
-<<<<<<< Updated upstream
   // private screen: Screen;
   // private room: Room;
-=======
-<<<<<<< HEAD
-  private screen: Screen;
-  //private room: Room;
-=======
-  // private screen: Screen;
-  // private room: Room;
->>>>>>> 88e890ca8e4e9888a5b7405b9601d232e0ab5b01
->>>>>>> Stashed changes
 
   constructor() {
     // IMPORTANT - vr viewer starts off looking in (0, 0, -1) direction
@@ -42,9 +32,9 @@ export class App {
 
     // Light
     const color = 0x35fc03;
-    const intensity = 0.75;
+    const intensity = 2.75;
     const light = new SpotLight(color, intensity);
-    light.position.set(0, 0, 100);
+    light.position.set(0, 0, 1);
     light.target.position.set(0, 0, -1);
 
     this.scene.add(light);
@@ -82,6 +72,8 @@ export class App {
                 child.material = new MeshPhongMaterial({ color: new Color('red'), side: DoubleSide });
             }
         } );
+        obj.position.set(-0.25, 0, -2);
+        obj.rotation.set(0, -Math.PI / 2, 0);
         that.scene.add( obj );
       },
       // called when loading is in progresses
