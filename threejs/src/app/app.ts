@@ -1,4 +1,4 @@
-import { AxesHelper, Color, PerspectiveCamera, Scene, SpotLight, Vector3, WebGLRenderer } from 'three';
+import { AxesHelper, Color, DoubleSide, Mesh, MeshPhongMaterial, PerspectiveCamera, Scene, SpotLight, Vector3, WebGLRenderer } from 'three';
 import { Room } from './room';
 import { Screen } from './screen';
 import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
@@ -14,21 +14,21 @@ export class App {
     canvas: document.getElementById('main-canvas') as HTMLCanvasElement,
   });
 
-  private screen: Screen;
-  private room: Room;
+  // private screen: Screen;
+  // private room: Room;
 
   constructor() {
     // IMPORTANT - vr viewer starts off looking in (0, 0, -1) direction
 
     // Screen
-    this.screen = new Screen(10, 5, new Color('white'));
-    this.scene.add(this.screen);
-    this.screen.position.set(0,0,-10);
+    // this.screen = new Screen(10, 5, new Color('white'));
+    // this.scene.add(this.screen);
+    // this.screen.position.set(0,0,-10);
 
     // Room
-    this.room = new Room(20, new Color('red'));
-    this.scene.add(this.room);
-    this.room.position.set(0,0,0);
+    // this.room = new Room(20, new Color('red'));
+    // this.scene.add(this.room);
+    // this.room.position.set(0,0,0);
 
     // Light
     const color = 0x35fc03;
@@ -65,10 +65,14 @@ export class App {
       // resource URL
       './dist/assets/room1.obj',
       // called when resource is loaded
-      function ( object: any ) {
 
-        that.scene.add( object );
-
+      function( obj ){
+        obj.traverse( function( child ) {
+            if ( child instanceof Mesh ) {
+                child.material = new MeshPhongMaterial({ color: new Color('red'), side: DoubleSide });
+            }
+        } );
+        that.scene.add( obj );
       },
       // called when loading is in progresses
       function ( xhr: any ) {
