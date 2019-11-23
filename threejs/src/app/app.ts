@@ -1,4 +1,4 @@
-import { AxesHelper, Color, DoubleSide, Mesh, MeshPhongMaterial, PerspectiveCamera, Scene, SpotLight, Vector3, WebGLRenderer } from 'three';
+import { AxesHelper, Color, DoubleSide, Fog, Mesh, MeshPhongMaterial, PerspectiveCamera, Scene, SpotLight, Vector3, WebGLRenderer, FogExp2 } from 'three';
 import { Room } from './room';
 import { Screen } from './screen';
 import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
@@ -39,6 +39,10 @@ export class App {
 
     this.scene.add(light);
     this.scene.add(light.target);
+
+    // Fog
+    //this.scene.fog = new Fog(0x326ba8, 1, 3)
+    this.scene.fog = new FogExp2(0x326ba8, 0.5)
 
     // To see XYZ axes in VR
     var axesHelper = new AxesHelper( 20 );
