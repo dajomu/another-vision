@@ -2,6 +2,7 @@ import { AxesHelper, Color, DoubleSide, Fog, Mesh, MeshPhongMaterial, Perspectiv
 // import { Room } from './room';
 // import { Screen } from './screen';
 import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader'
 
 const loader = new OBJLoader();
@@ -54,15 +55,29 @@ export class App {
     this.camera.position.set(0,0,0);
     this.camera.lookAt(new Vector3(1, 1, 1));
 
-    this.loadRoom(this);
+    this.initVRorControls();
 
-    // Add VR button
-    document.body.appendChild( WEBVR.createButton( this.renderer, {referenceSpaceType: 'false'} ) );
-    this.renderer.vr.enabled = true;
+    this.loadRoom(this);
 
     this.renderer.setAnimationLoop(this.render);
     this.renderer.setSize(innerWidth, innerHeight);
     this.renderer.setClearColor(new Color('rgb(0,0,0)'));
+  }
+
+  private initVRorControls = () => {
+    // const params = (new URL(window.location.href)).searchParams;
+    // const allowvr = params.get('allowvr') === 'true';
+    const allowvr = false;
+    if (allowvr) {
+      // Add VR button
+      document.body.appendChild( WEBVR.createButton( this.renderer, {referenceSpaceType: 'false'} ) );
+      this.renderer.vr.enabled = true;
+    } else {
+      // no VR, add some controls
+      const controls = new OrbitControls(this.camera, document.getElementById('main-canvas') as HTMLCanvasElement);
+      controls.target.set(0, 0, -2);
+      controls.update();
+    }
   }
 
   // Use room model
