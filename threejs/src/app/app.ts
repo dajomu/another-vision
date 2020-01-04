@@ -33,19 +33,29 @@ export class App {
     // this.room.position.set(0,0,0);
 
     // Light
-    const color = 0x35fc03;
+    const backColor = 0x35fc03;
+    const frontColor = 0x326ba8;
     const intensity = 1;
-    const light = new SpotLight(color, intensity);
-    light.castShadow = true;
-    light.position.set(0, 0, 1);
+    const backLight = new SpotLight(backColor, intensity);
+    backLight.castShadow = true;
+    backLight.position.set(0, 0, 1);
     // this.scene.add( new Mesh( new BoxGeometry( 0.5,0.5,0.5 ), new MeshBasicMaterial() ) );
-    light.target.position.set(0, 0, -1);
+    backLight.target.position.set(0, 0, -1);
 
-    this.scene.add(light);
-    this.scene.add(light.target);
+    this.scene.add(backLight);
+    this.scene.add(backLight.target);
+
+    const frontLight = new SpotLight(frontColor, intensity);
+    frontLight.castShadow = true;
+    frontLight.position.set(0, 0, 0);
+    // this.scene.add( new Mesh( new BoxGeometry( 0.5,0.5,0.5 ), new MeshBasicMaterial() ) );
+    frontLight.target.position.set(0, 0, -1);
+
+    this.scene.add(frontLight);
+    this.scene.add(frontLight.target);
 
     const lightBlock = new Mesh( new BoxGeometry( 0.1, 3.24, 0.15 ), new MeshPhongMaterial() );
-    lightBlock.position.set(0.00456, 0, -1);
+    lightBlock.position.set(0, 0, 0);
     lightBlock.castShadow = true; //default is false
     // lightBlock.scale.set(0.00456, 1.5, 3);
     // add the object to the scene
@@ -53,7 +63,7 @@ export class App {
 
     // Fog
     //this.scene.fog = new Fog(0x326ba8, 1, 3)
-    // this.scene.fog = new FogExp2(0x326ba8, 0.5)
+    this.scene.fog = new FogExp2('white', 0.3)
 
     // To see XYZ axes in VR
     var axesHelper = new AxesHelper( 20 );
@@ -107,7 +117,7 @@ export class App {
             }
         } );
         // need to figure out a good co-ordinate system to place camera, lights and room object
-        obj.position.set(-0.25, 0, -2);
+        obj.position.set(-0.08, 0, -2);
         obj.rotation.set(0, -Math.PI / 2, 0);
         that.scene.add( obj );
       },
