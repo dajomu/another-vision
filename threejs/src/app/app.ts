@@ -1,7 +1,7 @@
-import { AxesHelper, Color, BoxGeometry, DoubleSide, Fog, Mesh, MeshBasicMaterial, MeshPhongMaterial, PCFSoftShadowMap, PerspectiveCamera, PointLight, Scene, SpotLight, Vector3, WebGLRenderer, FogExp2 } from 'three';
+import { AxesHelper, Color, BoxGeometry, DoubleSide, Fog, Mesh, MeshBasicMaterial, MeshPhongMaterial, PCFSoftShadowMap,  PCFShadowMap, BasicShadowMap, VSMShadowMap, PerspectiveCamera, PointLight, Scene, SpotLight, Vector3, WebGLRenderer, FogExp2 } from 'three';
 // import { Room } from './room';
 // import { Screen } from './screen';
-import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
+import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader'
 
@@ -82,17 +82,17 @@ export class App {
     this.renderer.setSize(innerWidth, innerHeight);
     this.renderer.setClearColor(new Color('rgb(0,0,0)'));
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = PCFSoftShadowMap;
+    this.renderer.shadowMap.type = VSMShadowMap;
   }
 
   private initVRorControls = () => {
     // const params = (new URL(window.location.href)).searchParams;
     // const allowvr = params.get('allowvr') === 'true';
-    const allowvr = false;
+    const allowvr = true;
     if (allowvr) {
       // Add VR button
-      document.body.appendChild( WEBVR.createButton( this.renderer, {referenceSpaceType: 'false'} ) );
-      this.renderer.vr.enabled = true;
+      document.body.appendChild( VRButton.createButton( this.renderer, {referenceSpaceType: 'false'} ) );
+      this.renderer.xr.enabled = true;
     } else {
       // no VR, add some controls
       const controls = new OrbitControls(this.camera, document.getElementById('main-canvas') as HTMLCanvasElement);

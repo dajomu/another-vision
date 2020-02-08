@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "main": "app.ts",
   "scripts": {
-    "start": "webpack-dev-server --host 0.0.0.0",
+    "start": "webpack-dev-server --https --host 0.0.0.0",
     "build": "webpack",
     "build:prod": "webpack --mode=production"
   },
   "dependencies": {
     "copy-webpack-plugin": "^5.0.5",
-    "three": "^0.107.0",
+    "three": "^0.113.2",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
     "webpack": "^4.39.2",
