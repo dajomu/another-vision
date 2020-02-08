@@ -1,4 +1,4 @@
-import { AxesHelper, Color, BoxGeometry, DoubleSide, Fog, Mesh, MeshBasicMaterial, MeshPhongMaterial, PCFSoftShadowMap, PerspectiveCamera, PointLight, Scene, SpotLight, Vector3, WebGLRenderer, FogExp2 } from 'three';
+import { AxesHelper, Color, BoxGeometry, DoubleSide, Fog, Mesh, MeshBasicMaterial, MeshPhongMaterial, PCFSoftShadowMap, PCFShadowMap, BasicShadowMap, PerspectiveCamera, PointLight, Scene, SpotLight, Vector3, WebGLRenderer, FogExp2 } from 'three';
 // import { Room } from './room';
 // import { Screen } from './screen';
 import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
@@ -9,7 +9,7 @@ const loader = new OBJLoader();
 
 export class App {
   private readonly scene = new Scene();
-  private readonly camera = new PerspectiveCamera(90, innerWidth / innerHeight, 0.1, 10000);
+  private readonly camera = new PerspectiveCamera(90, innerWidth / innerHeight, 0.1, 10);
   private readonly renderer = new WebGLRenderer({
     antialias: true,
     canvas: document.getElementById('main-canvas') as HTMLCanvasElement,
@@ -36,17 +36,21 @@ export class App {
     const backColor = 0x35fc03;
     const frontColor = 0x326ba8;
     const intensity = 1;
-    const backLight = new SpotLight(backColor, intensity);
+    const backLight = new SpotLight(backColor, intensity, 100);
     backLight.castShadow = true;
     backLight.position.set(0, 0, 1);
     // this.scene.add( new Mesh( new BoxGeometry( 0.5,0.5,0.5 ), new MeshBasicMaterial() ) );
     backLight.target.position.set(0, 0, -1);
 
+    // Make shadow edges tighter/less diffracty
+    backLight.shadow.mapSize.width = 4000;  // default
+    backLight.shadow.mapSize.height = 4000; // default
+
     this.scene.add(backLight);
     this.scene.add(backLight.target);
 
     const frontLight = new SpotLight(frontColor, intensity);
-    frontLight.castShadow = true;
+    frontLight.castShadow = false;
     frontLight.position.set(0, 0, 0);
     // this.scene.add( new Mesh( new BoxGeometry( 0.5,0.5,0.5 ), new MeshBasicMaterial() ) );
     frontLight.target.position.set(0, 0, -1);
@@ -82,13 +86,17 @@ export class App {
     this.renderer.setSize(innerWidth, innerHeight);
     this.renderer.setClearColor(new Color('rgb(0,0,0)'));
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = PCFSoftShadowMap;
+
+    // TODO: PCFSoftShadowMap causes performance issues (PCFShadowMap doesn't). 
+    // Investigate different light shadow mapping variables (https://threejs.org/docs/#api/en/lights/SpotLight); 
+    // different light types etc.
+    this.renderer.shadowMap.type = PCFShadowMap;
   }
 
   private initVRorControls = () => {
     // const params = (new URL(window.location.href)).searchParams;
     // const allowvr = params.get('allowvr') === 'true';
-    const allowvr = false;
+    const allowvr = true;
     if (allowvr) {
       // Add VR button
       document.body.appendChild( WEBVR.createButton( this.renderer, {referenceSpaceType: 'false'} ) );
