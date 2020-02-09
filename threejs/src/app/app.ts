@@ -1,6 +1,7 @@
 import { AxesHelper, Color, BoxGeometry, DoubleSide, Fog, Mesh, MeshBasicMaterial, MeshPhongMaterial, PCFSoftShadowMap, PCFShadowMap, BasicShadowMap, PerspectiveCamera, PointLight, Scene, SpotLight, Vector3, WebGLRenderer, FogExp2 } from 'three';
 // import { Room } from './room';
 // import { Screen } from './screen';
+import { getSixRandomThreeColours } from './colourUtils';
 import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader'
@@ -14,6 +15,8 @@ export class App {
     antialias: true,
     canvas: document.getElementById('main-canvas') as HTMLCanvasElement,
   });
+
+  private animationColors: Color[] = getSixRandomThreeColours();
 
   // Currently not using as using room model
   // private screen: Screen;
@@ -33,8 +36,8 @@ export class App {
     // this.room.position.set(0,0,0);
 
     // Light
-    const backColor = 0x35fc03;
-    const frontColor = 0x326ba8;
+    const backColor = this.animationColors[0].getHex();
+    const frontColor = this.animationColors[1].getHex();
     const intensity = 1;
     const backLight = new SpotLight(backColor, intensity, 100);
     backLight.castShadow = true;
@@ -87,8 +90,8 @@ export class App {
     this.renderer.setClearColor(new Color('rgb(0,0,0)'));
     this.renderer.shadowMap.enabled = true;
 
-    // TODO: PCFSoftShadowMap causes performance issues (PCFShadowMap doesn't). 
-    // Investigate different light shadow mapping variables (https://threejs.org/docs/#api/en/lights/SpotLight); 
+    // TODO: PCFSoftShadowMap causes performance issues (PCFShadowMap doesn't).
+    // Investigate different light shadow mapping variables (https://threejs.org/docs/#api/en/lights/SpotLight);
     // different light types etc.
     this.renderer.shadowMap.type = PCFShadowMap;
   }
@@ -148,13 +151,13 @@ export class App {
   }
 
   private render = () => {
-    console.log('render:',
-      'X-pos: ' + this.camera.position.x,
-      'Y-pos: ' + this.camera.position.y,
-      'Z-pos: ' + this.camera.position.z,
-      'X-rot: ' + this.camera.rotation.x,
-      'Y-rot: ' + this.camera.rotation.y,
-      'Z-rot: ' + this.camera.rotation.z);
+    // console.log('render:',
+    //   'X-pos: ' + this.camera.position.x,
+    //   'Y-pos: ' + this.camera.position.y,
+    //   'Z-pos: ' + this.camera.position.z,
+    //   'X-rot: ' + this.camera.rotation.x,
+    //   'Y-rot: ' + this.camera.rotation.y,
+    //   'Z-rot: ' + this.camera.rotation.z);
     this.renderer.render(this.scene, this.camera);
     this.adjustCanvasSize();
   }

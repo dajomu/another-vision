@@ -11,6 +11,7 @@
     "copy-webpack-plugin": "^5.0.5",
     "three": "^0.107.0",
     "ts-loader": "^6.0.4",
+    "tweenjs": "^1.0.2",
     "typescript": "^3.5.3",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7"
