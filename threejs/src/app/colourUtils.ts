@@ -12,3 +12,7 @@ function getRandomColor(): string {
 export function getSixRandomThreeColours(): Color[] {
   return [1,2,3,4,5,6].map(() => {const randCol = getRandomColor(); console.log(randCol); return new Color(randCol)});
 }
+
+export function getRandomColourChangeTimes(): number[] {
+  return [1,2,3,4,5,6].map(() => {return Math.floor(Math.random() * 5000) + 5000})
+}

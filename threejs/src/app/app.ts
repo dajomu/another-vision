@@ -4,7 +4,9 @@ import { AxesHelper, Color, BoxGeometry, DoubleSide, Fog, Mesh, MeshBasicMateria
 import { getSixRandomThreeColours } from './colourUtils';
 import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader'
+import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader';
+// const TWEEN = require('@tweenjs/tween.js');
+import TWEEN from '@tweenjs/tween.js'
 
 const loader = new OBJLoader();
 
@@ -15,6 +17,8 @@ export class App {
     antialias: true,
     canvas: document.getElementById('main-canvas') as HTMLCanvasElement,
   });
+  private tweenBackColour?: TWEEN.Tween;
+  currentColourIndex = 0;
 
   private animationColors: Color[] = getSixRandomThreeColours();
 
@@ -39,7 +43,8 @@ export class App {
     const backColor = this.animationColors[0].getHex();
     const frontColor = this.animationColors[1].getHex();
     const intensity = 1;
-    const backLight = new SpotLight(backColor, intensity, 100);
+    const backLight = new SpotLight('white', intensity, 100);
+    backLight.color.set(this.animationColors[0]);
     backLight.castShadow = true;
     backLight.position.set(0, 0, 1);
     // this.scene.add( new Mesh( new BoxGeometry( 0.5,0.5,0.5 ), new MeshBasicMaterial() ) );
@@ -94,12 +99,29 @@ export class App {
     // Investigate different light shadow mapping variables (https://threejs.org/docs/#api/en/lights/SpotLight);
     // different light types etc.
     this.renderer.shadowMap.type = PCFShadowMap;
+
+    this.addColourTween(backLight.color, 0);
+    this.addColourTween(frontLight.color, 1);
+  }
+
+  addColourTween(color: Color, offset: number) {
+    if (this.currentColourIndex < 5) {
+      this.currentColourIndex += 1;
+    } else {
+      this.currentColourIndex = 0;
+    }
+    this.tweenBackColour = new TWEEN.Tween(color)
+      .to(this.animationColors[this.currentColourIndex + offset], 4000)
+      .onComplete(() => {
+        this.addColourTween(color, offset);
+      })
+      .start();
   }
 
   private initVRorControls = () => {
     // const params = (new URL(window.location.href)).searchParams;
     // const allowvr = params.get('allowvr') === 'true';
-    const allowvr = true;
+    const allowvr = false;
     if (allowvr) {
       // Add VR button
       document.body.appendChild( WEBVR.createButton( this.renderer, {referenceSpaceType: 'false'} ) );
@@ -160,5 +182,6 @@ export class App {
     //   'Z-rot: ' + this.camera.rotation.z);
     this.renderer.render(this.scene, this.camera);
     this.adjustCanvasSize();
+    TWEEN.update();
   }
 }
