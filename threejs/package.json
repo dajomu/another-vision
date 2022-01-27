@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "copy-webpack-plugin": "^5.0.5",
-    "three": "^0.107.0",
+    "three": "^0.137.0",
     "ts-loader": "^6.0.4",
     "tweenjs": "^1.0.2",
     "typescript": "^3.5.3",
